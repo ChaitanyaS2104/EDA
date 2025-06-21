@@ -1,243 +1,165 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import StepBlock from "./StepBlock";
 import Substep from "./Substep";
 import Image from "next/image";
 
-const CustomData = ({ file }) => {
+const CustomData = ({ file, outputData }) => {
   const [dtypesTable, setDtypesTable] = useState(null);
-  // const fetchDtypes = async () => {
-  //   try {
-  //     const res = await fetch("/api/execute/dtypes");
-  //     const data = await res.json();
-
-  //     const table = (
-  //       <table className="outputTable">
-  //         <thead>
-  //           <tr>
-  //             <th>Column Name</th>
-  //             <th>Data Type</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-  //           {Object.entries(data).map(([col, dtype]) => (
-  //             <tr key={col}>
-  //               <td>{col}</td>
-  //               <td>{dtype}</td>
-  //             </tr>
-  //           ))}
-  //         </tbody>
-  //       </table>
-  //     );
-
-  //     setDtypesTable(table);
-  //   } catch (err) {
-  //     console.error("Error fetching dtypes:", err);
-  //     setDtypesTable(<p>Failed to load data types.</p>);
-  //   }
-  // };
+  const setDataTypes = (data) => {
+    const table = (
+      <table className="outputTable">
+        <thead>
+          <tr>
+            <th>Column Name</th>
+            <th>Data Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(data).map(([col, dtype]) => (
+            <tr key={col}>
+              <td>{col}</td>
+              <td>{dtype}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+    setDtypesTable(table);
+  };
 
   const [shape, setShape] = useState({ rows: 0, columns: 0 });
-
-  // const fetchShape = async () => {
-  //   try {
-  //     const res = await fetch("/api/execute/shape");
-  //     const data = await res.json();
-
-  //     // Now directly use rows and columns
-  //     const { rows, columns } = data;
-
-  //     setShape({ rows, columns });
-  //   } catch (err) {
-  //     console.error("Error fetching shape:", err);
-  //     setShape({ rows: 0, columns: 0 }); // fallback value
-  //   }
-  // };
+  const getShapes = (data) => {
+    const { rows, columns } = data;
+    setShape({ rows, columns });
+  };
 
   const [countsTable, setcountsTable] = useState(null);
   const [countsData, setCountsData] = useState(null);
-  // const fetchCountsTable = async () => {
-  //   try {
-  //     const res = await fetch("/api/execute/count");
-  //     const data = await res.json();
-
-  //     const countTable = (
-  //       <table className="outputTable" id="countsTable">
-  //         <thead>
-  //           <tr>
-  //             <th>Column Name</th>
-  //             <th>Non-null count</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-  //           {Object.entries(data).map(([col, dtype]) => (
-  //             <tr key={col}>
-  //               <td>{col}</td>
-  //               <td>{dtype}</td>
-  //             </tr>
-  //           ))}
-  //         </tbody>
-  //       </table>
-  //     );
-  //     setcountsTable(countTable);
-  //     setCountsData(data);
-  //   } catch (err) {
-  //     console.error("Error fetching dtypes:", err);
-  //     setcountsTable(<p>Failed to load data types.</p>);
-  //   }
-  // };
+  const getCountsTable = (data) => {
+    const countTable = (
+      <table className="outputTable" id="countsTable">
+        <thead>
+          <tr>
+            <th>Column Name</th>
+            <th>Non-null count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(data).map(([col, dtype]) => (
+            <tr key={col}>
+              <td>{col}</td>
+              <td>{dtype}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+    setcountsTable(countTable);
+    setCountsData(data);
+  };
 
   const [missingCount, setMissingCount] = useState(0);
   const [missingCols, setMissingCols] = useState([]);
   const [missingColsBy, setMissingColsBy] = useState([]);
+  const checkMissingData = () => {
+    let tempCount = 0;
+    let tempCols = [];
+    let tempBy = [];
 
-  // const checkMissingData = () => {
-  //   let tempCount = 0;
-  //   let tempCols = [];
-  //   let tempBy = [];
-
-  //   if (!shape || !countsData) return;
-  //   Object.entries(countsData).forEach(([col, countStr]) => {
-  //     const count = parseInt(countStr, 10);
-  //     if (count < shape.rows) {
-  //       tempCount++;
-  //       tempCols.push(col);
-  //       tempBy.push(shape.rows - count);
-  //     }
-  //   });
-  //   setMissingCount(tempCount);
-  //   setMissingCols(tempCols);
-  //   setMissingColsBy(tempBy);
-  // };
+    if (!shape || !countsData) return;
+    Object.entries(countsData).forEach(([col, countStr]) => {
+      const count = parseInt(countStr, 10);
+      if (count < shape.rows) {
+        tempCount++;
+        tempCols.push(col);
+        tempBy.push(shape.rows - count);
+      }
+    });
+    setMissingCount(tempCount);
+    setMissingCols(tempCols);
+    setMissingColsBy(tempBy);
+  };
 
   const [updatedCountsTable, setUpdatedCountsTable] = useState(null);
-  // const fetchUpdatedCountsTable = async () => {
-  //   try {
-  //     const res = await fetch("/api/execute/updated-count");
-  //     const data = await res.json();
-
-  //     const countTable = (
-  //       <table className="outputTable" id="countsTable">
-  //         <thead>
-  //           <tr>
-  //             <th>Column Name</th>
-  //             <th>Non-null count</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-  //           {Object.entries(data).map(([col, dtype]) => (
-  //             <tr key={col}>
-  //               <td>{col}</td>
-  //               <td>{dtype}</td>
-  //             </tr>
-  //           ))}
-  //         </tbody>
-  //       </table>
-  //     );
-  //     setUpdatedCountsTable(countTable);
-  //   } catch (err) {
-  //     console.error("Error fetching dtypes:", err);
-  //     setUpdatedCountsTable(<p>Failed to load data types.</p>);
-  //   }
-  // };
+  const [selectedColumns, setSelectedColumns] = useState("");
+  const fetchUpdatedCountsTable = (data) => {
+    const countTable = (
+      <table className="outputTable" id="countsTable">
+        <thead>
+          <tr>
+            <th>Column Name</th>
+            <th>Non-null count</th>
+          </tr>
+        </thead>
+        <tbody>
+          {Object.entries(data).map(([col, dtype]) => (
+            <tr key={col}>
+              <td>{col}</td>
+              <td>{dtype}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+    setUpdatedCountsTable(countTable);
+  };
 
   const [boxplot, setBoxplot] = useState(null);
   const [loadingBoxplot, setLoadingBoxplot] = useState(true);
-  // const fetchBoxPlot = async () => {
-  //   try {
-  //     const res = await fetch("/api/output/boxplot");
-  //     const data = await res.json();
-  //     const imageUrl = `${data.imageUrl}?t=${Date.now()}`;
-  //     setBoxplot(imageUrl);
-  //     setLoadingBoxplot(false);
-  //   } catch (err) {
-  //     console.error("Error fetching dtypes:", err);
-  //     setBoxplot(<p>Failed to load boxplot.</p>);
-  //     setLoadingBoxplot(false);
-  //   }
-  // };
+  const fetchBoxPlot = async (data) => {
+    setBoxplot(data);
+    setLoadingBoxplot(false);
+  };
 
   const [boxplotData, setBoxplotData] = useState({});
   const [loadingBoxplotdata, setLoadingBoxplotdata] = useState(true);
-  // const fetchBoxPlotData = async () => {
-  //   try {
-  //     const res = await fetch("/api/output/boxplot-data");
-  //     const data = await res.json();
-  //     setBoxplotData(data);
-  //     setLoadingBoxplotdata(false);
-  //   } catch (err) {
-  //     console.error("Error fetching dtypes:", err);
-  //     setBoxplotData(<p>Failed to load boxplot data.</p>);
-  //     setLoadingBoxplotdata(false);
-  //   }
-  // };
+  const fetchBoxPlotData = (data) => {
+    setBoxplotData(data);
+    setLoadingBoxplotdata(false);
+  };
 
   const [heatmap, setHeatmap] = useState(null);
   const [loadingHeatmap, setLoadingHeatmap] = useState(true);
-  // const fetchHeatmap = async () => {
-  //   try {
-  //     const res = await fetch("/api/output/heatmap");
-  //     const data = await res.json();
-  //     setHeatmap(data.imageUrl);
-  //     setLoadingHeatmap(false);
-  //   } catch (err) {
-  //     setLoadingHeatmap(false);
-  //     console.error("Error fetching dtypes:", err);
-  //     setHeatmap(<p>Failed to load heatmap.</p>);
-  //   }
-  // };
+  const fetchHeatmap = (data) => {
+    setHeatmap(data);
+    setLoadingHeatmap(false);
+  };
 
   const [correlation, setCorrelation] = useState({});
   const [loadingHeatmapData, setLoadingHeatmapData] = useState(true);
-  // const fetchCorrelation = async () => {
-  //   try {
-  //     const res = await fetch("/api/output/heatmap-corr");
-  //     const data = await res.json();
-  //     setCorrelation(data);
-  //     setLoadingHeatmapData(false);
-  //   } catch (err) {
-  //     console.error("Error fetching dtypes:", err);
-  //     setLoadingHeatmapData(false);
-  //     setCorrelation(<p>Failed to load correlation data.</p>);
-  //   }
-  // };
+  const fetchCorrelation = (data) => {
+    setCorrelation(data);
+    setLoadingHeatmapData(false);
+  };
 
   const [correlationMatrix, setCorrelationMatrix] = useState({});
-  const [loadingCorrelationMatrix, setLoadingCorrelationMatrix] =
-    useState(true);
-  // const fetchCorrelationMatrix = async () => {
-  //   try {
-  //     const res = await fetch("/api/output/corr2");
-  //     const data = await res.json();
-  //     setCorrelationMatrix(data);
-  //     setLoadingCorrelationMatrix(false);
-  //   } catch (err) {
-  //     console.error("Error fetching dtypes:", err);
-  //     setLoadingCorrelationMatrix(false);
-  //     setCorrelationMatrix(<p>Failed to load correlation data.</p>);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   checkMissingData();
-  // }, [shape, countsData]);
-
-  // const [selectedColumns, setSelectedColumns] = useState("");
-  // useEffect(() => {
-  //   let temp = missingCols.map((col) => `"${col}"`).join(", ");
-  //   setSelectedColumns(temp);
-  // }, [missingCols]);
+  const [loadingCorrelationMatrix, setLoadingCorrelationMatrix] = useState(true);
+  const fetchCorrelationMatrix = (data) => {
+    setCorrelationMatrix(data);
+    setLoadingCorrelationMatrix(false);
+  };
 
   useEffect(() => {
-    // fetchDtypes();
-    // fetchShape();
-    // fetchCountsTable();
-    // fetchUpdatedCountsTable();
-    // fetchBoxPlot();
-    // fetchBoxPlotData();
-    // fetchHeatmap();
-    // fetchCorrelation();
-    // fetchCorrelationMatrix();
-  }, [file]);
+    let temp = missingCols.map((col) => `"${col}"`).join(", ");
+    setSelectedColumns(temp);
+  }, [missingCols]);
+
+  useEffect(()=>{
+    checkMissingData();
+  }, [countsData, shape])
+
+  useEffect(() => {
+    setDataTypes(outputData.dtypes);
+    getShapes(outputData.shape);
+    getCountsTable(outputData.non_null_counts);
+    fetchUpdatedCountsTable(outputData.post_impute_counts);
+    fetchBoxPlot(outputData.boxplot_url);
+    fetchBoxPlotData(outputData.medians);
+    fetchHeatmap(outputData.heatmap_url);
+    fetchCorrelation(outputData.top_correlations);
+    fetchCorrelationMatrix(outputData.correlation_matrix);
+  }, [outputData]);
+
   return (
     <div className="stepContainerCustom">
       <StepBlock
@@ -273,7 +195,7 @@ import seaborn as sns`}
         stepOutput={``}
         stepNumber={1}
       />
-{/* 
+
       <Substep
         substepDesc={
           <>
@@ -297,9 +219,9 @@ import seaborn as sns`}
 dataset.dtypes`}
         substepOutput={dtypesTable}
         substepOutputDesc={""}
-      /> */}
+      />
 
-      {/* <Substep
+      <Substep
         substepDesc={
           <>
             <ul>
@@ -313,8 +235,8 @@ dataset.dtypes`}
         substepCode={`dataset.shape`}
         substepOutput={`(${shape.rows}, ${shape.columns})`}
         substepOutputDesc={""}
-      /> */}
-{/* 
+      />
+
       <Substep
         substepDesc={
           <>
@@ -343,7 +265,6 @@ dataset.dtypes`}
               </p>
             )}
             <ul>
-              Dynamically render additional missing columns
               {missingCols.map((element, index) => (
                 <li key={element}>
                   <strong>{element}:</strong> {missingColsBy[index]} values
@@ -368,9 +289,9 @@ dataset.dtypes`}
             ) : null}
           </>
         }
-      />  */}
+      />
 
-      {/* <StepBlock
+      <StepBlock
         step_id="step2"
         stepName="Handling missing data"
         stepDesc={
@@ -401,9 +322,9 @@ dataset[[${selectedColumns}]] = si.transform(dataset[[${selectedColumns}]])`}
         stepOutput={""}
         stepOutputDesc={""}
         stepNumber={2}
-      /> */}
+      />
 
-      {/* <Substep
+      <Substep
         substepDesc={
           <>
             <ul>
@@ -414,8 +335,8 @@ dataset[[${selectedColumns}]] = si.transform(dataset[[${selectedColumns}]])`}
         substepCode={`dataset.count()`}
         substepOutput={updatedCountsTable}
         substepOutputDesc={<>Now no missing values present in the dataset</>}
-      /> */}
-{/* 
+      />
+
       <StepBlock
         step_id="step3"
         stepName="Exploring feature distributions"
@@ -450,7 +371,13 @@ plt.show()`
             {loadingBoxplot ? (
               <span>Loading...</span>
             ) : (
-              <Image src={boxplot} className="boxplotImage" width={20} height={20} alt="boxplot"/>
+              <Image
+                src={boxplot}
+                className="boxplotImage"
+                width={440}
+                height={440}
+                alt="boxplot"
+              />
             )}
           </>
         }
@@ -477,9 +404,9 @@ plt.show()`
           </>
         }
         stepNumber={3}
-      /> */}
+      />
 
-      {/* <StepBlock
+      <StepBlock
         step_id="step4"
         stepName="Feature relationships"
         stepDesc={
@@ -507,7 +434,13 @@ plt.show()`}
             {loadingHeatmap ? (
               <span>Loading...</span>
             ) : (
-              <Image src={heatmap} className="heatmapImage" width={20} height={20} alt="heatmap"/>
+              <Image
+                src={heatmap}
+                className="heatmapImage"
+                width={420}
+                height={300}
+                alt="heatmap"
+              />
             )}
           </>
         }
@@ -532,9 +465,9 @@ plt.show()`}
           </>
         }
         stepNumber={4}
-      /> */}
+      />
 
-      {/* <Substep
+      <Substep
         substepDesc={
           <>
             <ul>
@@ -591,7 +524,7 @@ print(correlation)`
           )
         }
         substepOutputDesc={""}
-      /> */}
+      />
     </div>
   );
 };

@@ -9,52 +9,33 @@ import FileUploader from "@components/FileUploader";
 import Image from "next/image";
 
 export default function page() {
-  const [fileState, setFileState] = useState(null);
-
+  //To show custom component
+  const [fileState, setFileState] = useState(false);
+  
   //To show in UI
   const [fileName, setFileName] = useState("No file chosen");
 
-  //To access the file for exe
-  const [filepath, setFilepath] = useState({
-    path: "",
-    url: "",
-  });
+  //To access the data of output
+  const [outputData, setOutputData] = useState({});
+  
 
-  const fetchFile = async () => {
-    try {
-      const res = await fetch("/api/upload", {
-        method: "GET",
-      });
-      if (!res.ok) {
-        setFileState(false);
-        return;
-      }
-      const data = await res.json();
-      if (data && data.filename) {
-        setFileState(true);
-      } else {
-        setFileState(false);
-      }
-    } catch (err) {
-      console.error("Fetch failed", err);
-      setFileState(false);
-    }
-  };
+  //To delete the images from the database
   const resetFile = async () => {
     await fetch("/api/upload/reset", {
-      method: "POST",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        path: filepath.path,
+        boxplot_url: outputData.boxplot_url,
+        heatmap_url: outputData.heatmap_url,
       }),
     });
   };
-
   useEffect(() => {
     resetFile();
   }, []);
+
 
   return (
     <>
@@ -62,7 +43,12 @@ export default function page() {
         <div className="title">EDA</div>
         <div className="about">
           <div className="flex-row account">
-            <Image src="/assets/account.png" width={40} height={40} alt="profile"/>
+            <Image
+              src="/assets/account.png"
+              width={40}
+              height={40}
+              alt="profile"
+            />
             <div>About</div>
           </div>
           <ProfileCard />
@@ -117,10 +103,10 @@ export default function page() {
             <MainButton text="Explore sample data" icon="/assets/explore.svg" />
             <FileUploader
               upload="/assets/upload.svg"
-              refreshFunction={fetchFile}
               setFileName={setFileName}
-              setFilepath={setFilepath}
               fileName={fileName}
+              setOutputData = {setOutputData}
+              setFileState={setFileState}
             />
           </div>
         </div>
@@ -129,7 +115,11 @@ export default function page() {
           <Timeline />
         </div>
         <div className="hLine" id="hrLine"></div>
-        {fileState ? <CustomData file={fileName} /> : <SampleData />}
+        {fileState ? (
+          <CustomData file={fileName} outputData={outputData} />
+        ) : (
+          <SampleData />
+        )}
       </main>
     </>
   );

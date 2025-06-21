@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const FileUploader = ({ upload, refreshFunction, fileName, setFileName, setFilepath }) => {
+const FileUploader = ({ upload, fileName, setFileName, setFileState, setOutputData}) => {
 
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -14,9 +14,9 @@ const FileUploader = ({ upload, refreshFunction, fileName, setFileName, setFilep
           method: "POST",
           body: formData,
         });
-        const {path, url} = await res.json()
-        setFilepath({path:path, url:url});
-        refreshFunction();
+        const data = await res.json()
+        setOutputData(data);
+        setFileState(true);
       } catch (err) {
         console.error("Upload failed", err);
       }
