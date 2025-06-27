@@ -1,106 +1,24 @@
+@import "tailwindcss";
 
-*{
-  padding: 0%;
-  margin: 0%;
-  box-sizing: border-box;
-  font-family:monospace;
-}
 html {
+  font-family: monospace;
   scroll-behavior: smooth;
 }
 
-.flex-row{
+.flex-row {
   display: flex;
   flex-direction: row;
   color: white;
   align-items: center;
 }
 
-.navBar{
-  width: 100vw;
-  padding: 10px 15px;
-  background-color: black;
-  color: white;
-  justify-content: space-between;
-}
-.navBar .title{
-  font-size: 1.4rem;
-  margin: 0px 25px;
-}
-
-.account{
-  background-color: rgb(40, 40, 40);
-  padding: 2px 8px;
-  border-radius: 10px;
-}
-
-.account:hover{
-  background-color: rgb(40, 40, 40);
-  cursor: pointer;
-  transform: scale(1.04);
-}
-.about:hover > .profile_card{
-  display: flex;
-}
-.account img{
-  margin-right: 10px;
-  align-self: flex-start;
-}
-.github_account_img{
-  border-radius: 50%;
-}
-.profile_card{
-  display: none;
-  padding: 20px 15px;
-  background-color: rgb(30, 30, 30);
-  width: 450px;
-  color: white;
-  border-radius: 10px;
-  position: absolute;
-  right:0;
-  top: 100%;
-  box-shadow: 0 2px 4px rgba(255, 150, 200, 0.5), 0 0 0 1px rgba(241, 118, 118, 0.8);
-}
-.about{
-  position: relative;
-  display: inline-block;
-}
-
-.profile_card Image{
-  width: 80px;
-  border-radius: 50%;
-}
-
-.profile_details{
-  display: flex;
-  flex-direction: column;
-  padding: 0 10px;
-}
-
-.profile_details .desc{
-  font-size: small;
-  color: rgba(255, 255, 255, 0.77);
-}
-
-.profile_details > *{
-  margin: 4px 0;
-}
-
-.links .github{
-  width: 25px;
-}
-
-.heroSection{
-  padding: 50px 50px 0 50px;
-}
-
-.heroSection .hero_Image{
+.heroSection .hero_Image {
   position: absolute;
   z-index: -100;
   transform: scale(1.2);
 }
 
-.backdropImage{
+.backdropImage {
   z-index: -200;
   width: 813px;
   position: absolute;
@@ -108,42 +26,33 @@ html {
   filter: opacity(0.9) saturate(1.2);
 }
 
-.heroSection .Image1{
+.heroSection .Image1 {
   top: 450px;
   right: 450px;
   transform: rotate(-30deg) scale(1.2);
 }
 
-.heroSection .Image2{
+.heroSection .Image2 {
   top: 260px;
   right: 70px;
 }
 
-.heroSection .Image3{
-  top:140px;
+.heroSection .Image3 {
+  top: 140px;
   right: 400px;
   transform: scale(0.6) rotate(-20deg);
 }
 
-.heroSection .Image4{
-  top:570px;
+.heroSection .Image4 {
+  top: 570px;
   right: 90px;
   transform: scale(0.6) rotate(30deg);
 }
 
-.heroSection > h1{
-  font-size: 2.2rem;
-}
-
-.heroSection .description{
-  line-height: 1.5;
-  margin: 20px 0;
-  width: 800px;
-}
-
-.mainButton, .custom-file-upload{
+.mainButton,
+.custom-file-upload {
   position: relative;
-  display: inline-flex; 
+  display: inline-flex;
   align-items: center;
   height: 45px;
   background-color: black;
@@ -157,37 +66,19 @@ html {
 }
 
 #file-upload {
-  display: none; /* Hide the default input */
+  display: none;
 }
 
-.file-name{
-  color: rgb(144, 144, 144);
-}
-.buttonIcon{
-  width: 20px;
-  margin-right: 9px;
-}
-
-.heroButtons{
-  display: flex;
-  align-items: center;
-}
-
-.mainButton:hover, .custom-file-upload:hover{
+.mainButton:hover,
+.custom-file-upload:hover {
   transform: scale(1.03);
-  box-shadow: 0px 5px 20px rgba(255, 150, 201, 0.932), 0 0 0 1px rgb(245, 181, 181);
-}
-
-.steps{
-  padding: 30px 50px;
+  box-shadow: 0px 5px 20px rgba(255, 150, 201, 0.932),
+    0 0 0 1px rgb(245, 181, 181);
 }
 
 .timeline {
-  width: 600px;
   position: relative;
-  padding-left: 10px;
   border-left: 3px solid #000000;
-  margin: 30px 0;
 }
 
 .timeline-item {
@@ -196,7 +87,7 @@ html {
   border-radius: 10px;
   cursor: pointer;
 }
-.timeline-item:hover{
+.timeline-item:hover {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.26);
   transform: scale(1.01);
 }
@@ -219,33 +110,34 @@ html {
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.159);
 }
 
-.timeline-content h3{
+.timeline-content h3 {
   margin-bottom: 8px;
 }
 
-.hLine{
+.hLine {
   border-top: 3px dashed rgb(21, 21, 21);
 }
-.stepContainer, .stepContainerCustom{
+
+.stepContainer,
+.stepContainerCustom {
   display: flex;
   flex-direction: column;
   gap: 20px;
   padding: 50px 140px;
 }
-.stepContainerCustom{
+.stepContainerCustom {
   background-color: rgba(250, 229, 226);
 }
 
-.step{
-  width: 100%;
-  padding: 20px 0 0 0; 
+.step {
+  padding: 20px 0 0 0;
   border-radius: 10px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.351);
   position: relative;
   background-color: white;
   margin: 10px 0;
 }
-.substep{
+.substep {
   width: 100%;
   border-radius: 10px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.351);
@@ -253,19 +145,21 @@ html {
   overflow: hidden;
   background-color: white;
 }
-.step h1{
+.step h1 {
   margin: 0 20px;
 }
-.step > p{
+.step > p {
   padding: 10px;
 }
-.step_code{
+.step_code {
   font-size: 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .step_output {
-  color: #333; /* Dark text */
+  color: #333;
   padding: 20px 20px;
-  border-left: 6px solid  rgba(241, 92, 92, 0.8); /* Google Colab blue bar */
+  border-left: 6px solid rgba(241, 92, 92, 0.8);
   font-family: monospace;
   white-space: pre-wrap;
   word-wrap: break-word;
@@ -278,61 +172,96 @@ html {
   background-color: white;
   flex-wrap: wrap;
 }
-.codespan{
+.codespan {
   background-color: rgba(255, 150, 201, 0.323);
   border-radius: 4px;
   padding: 2px 4px;
 }
-ul li{
-  margin: 10px 0;
-}
-ul{
-  margin: 20px 50px;
-}
-.stepNum{
+.stepNum {
   font-size: 2.2rem;
   background-color: black;
   color: white;
   border-radius: 50%;
-  padding: 10px 17px;
+  padding: 8px 17px;
   box-shadow: 6px 6px 0 0 rgba(241, 92, 92, 0.8);
   position: absolute;
   top: 2%;
   left: -8%;
 }
-.hljs{
-  border-radius: 0 0 10px 10px;
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 20px;
+  list-style-type: disc;
+  list-style-position: inside;
 }
-.substepDesc{
+
+/* Mobile responsiveness */
+@media screen and (max-width: 640px) {
+  .stepNum {
+    font-size: 1.4rem;
+    padding: 6px 12px;
+    box-shadow: 4px 4px 0 0 rgba(241, 92, 92, 0.7);
+    top: -4%;
+    left: -5%;
+  }
+  .stepContainer,
+  .stepContainerCustom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px 17px;
+  }
+  .outputDesc {
+    background-color: rgb(255, 241, 248);
+    align-self: flex-start;
+    border-radius: 6px;
+    border: 1px solid black;
+    flex-grow: 1;
+  }
+  .outputDesc p {
+    margin: 10px 0;
+  }
+}
+
+.hljs {
+  border-radius: 0 0 10px 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.substepDesc {
   margin: 15px 0;
 }
-.outputTable{
+.outputTable {
   padding: 10px;
   border-collapse: collapse;
 }
-table, th, td {
+table,
+th,
+td {
   border: 1px solid black;
-  padding: 8px 10px;
+  padding: 8px 8px;
   text-align: left;
 }
 
-.outputIcon{
+.outputIcon {
   align-self: flex-start;
 }
-.outputDesc{
+.outputDesc {
   background-color: rgb(255, 241, 248);
   align-self: flex-start;
-  margin: 0px 40px;
   padding: 10px 20px;
   border-radius: 6px;
   border: 1px solid black;
-  flex-grow:1;
+  flex-grow: 1;
 }
 .outputDesc p {
-  margin: 5px 0;
+  margin: 8px 0;
 }
 
-.steps a{
+.steps a {
   text-decoration: none;
   color: #000000;
 }

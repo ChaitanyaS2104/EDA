@@ -27,9 +27,9 @@ const FileUploader = ({ upload, fileName, setFileName, setFileState, setOutputDa
   return (
     <div>
       <label htmlFor="file-upload" className="custom-file-upload">
-        <Image src={upload} className="buttonIcon" alt="upload" width={20} height={20}/>Upload dataset
+        <Image src={upload} className="w-5 mr-2.5" alt="upload" width={20} height={20}/>Upload dataset
       </label>
-      <span className="file-name">{fileName}</span>
+      <span className="text-gray-500">{fileName}</span>
       <input id="file-upload" type="file" accept=".csv" onChange={handleFileChange} />
     </div>
   );

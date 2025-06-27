@@ -1,4 +1,3 @@
-import React from "react";
 const steps = [
   {
     title: "Data Loading & Understanding",
@@ -22,14 +21,14 @@ const steps = [
 
 export default function Timeline() {
   return (
-    <div className="timeline">
+    <div className="timeline max-w-3xl pl-2.5 ">
       {steps.map((step, index) => (
         <a key={index} href={`#step${index + 1}`}>
           <div className="timeline-item">
             <div className="timeline-dot"></div>
             <div className="timeline-content">
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
+              <h3 className="font-bold text-lg">{step.title}</h3>
+              <p className="text-md">{step.description}</p>
             </div>
           </div>
         </a>

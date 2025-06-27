@@ -12,7 +12,7 @@ const Button = ({ text, icon }) => {
       onClick={handleClick}
       className="mainButton"
     >
-      <span><Image src={icon} className="buttonIcon" width={20} height={20} alt="button"/></span>
+      <span><Image src={icon} className="w-5 mr-2.5" width={20} height={20} alt="button"/></span>
       {text}
     </button>
   );

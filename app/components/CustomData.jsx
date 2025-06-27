@@ -161,13 +161,13 @@ const CustomData = ({ file, outputData }) => {
   }, [outputData]);
 
   return (
-    <div className="stepContainerCustom">
+    <div className="stepContainerCustom w-full">
       <StepBlock
         step_id="step1"
         stepName="Importing libraries & Understanding the dataset"
         stepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>
                 The first step is to import essential Python libraries for data
                 analysis and visualization:
@@ -200,7 +200,7 @@ import seaborn as sns`}
         substepDesc={
           <>
             <>
-              <ul>
+              <ul className="list">
                 <li>
                   Import the dataset using{" "}
                   <span className="codespan">pd.read_csv()</span>. (Other
@@ -224,7 +224,7 @@ dataset.dtypes`}
       <Substep
         substepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>
                 <span className="codespan">dataset.shape</span> returns number
                 of rows and columns in the dataset.
@@ -240,7 +240,7 @@ dataset.dtypes`}
       <Substep
         substepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>
                 <span className="codespan">dataset.count()</span> function
                 returns the number of non-null values in each column. Which
@@ -264,7 +264,7 @@ dataset.dtypes`}
                 for data cleaning or imputation techniques.
               </p>
             )}
-            <ul>
+            <ul className="list">
               {missingCols.map((element, index) => (
                 <li key={element}>
                   <strong>{element}:</strong> {missingColsBy[index]} values
@@ -280,7 +280,7 @@ dataset.dtypes`}
                   values
                 </p>
                 <p>Other strategies:</p>
-                <ul>
+                <ul className="list">
                   <li>mean</li>
                   <li>median</li>
                   <li>Removing those tuples</li>
@@ -296,7 +296,7 @@ dataset.dtypes`}
         stepName="Handling missing data"
         stepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>
                 Missing values in the{" "}
                 {missingCols.map((element, index) => (
@@ -327,7 +327,7 @@ dataset[[${selectedColumns}]] = si.transform(dataset[[${selectedColumns}]])`}
       <Substep
         substepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>Check again</li>
             </ul>
           </>
@@ -342,7 +342,7 @@ dataset[[${selectedColumns}]] = si.transform(dataset[[${selectedColumns}]])`}
         stepName="Exploring feature distributions"
         stepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>
                 We will generate box plots for selected numerical features to
                 help detect <strong>outliers</strong> and understand their
@@ -386,9 +386,8 @@ plt.show()`
             <p>
               Removing outliers in many cases improves model performance by
               reducing noise.
-            </p>
-            <ul>
-              <ul>
+            </p> 
+              <ul className="list-disc list-inside">
                 {loadingBoxplotdata ? (
                   <span>Loading...</span>
                 ) : (
@@ -399,7 +398,6 @@ plt.show()`
                   ))
                 )}
               </ul>
-            </ul>
             <p>In our case we will not remove them</p>
           </>
         }
@@ -411,7 +409,7 @@ plt.show()`
         stepName="Feature relationships"
         stepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>
                 The heatmap is a visual representation of the correlation matrix
                 for all numeric features in the dataset.
@@ -449,7 +447,7 @@ plt.show()`}
             <p>
               <strong>Key observations: Highest correlations</strong>
             </p>
-            <ul>
+            <ul className="list-disc list-inside">
               {loadingHeatmapData ? (
                 <p>Loading correlation data...</p>
               ) : (
@@ -470,7 +468,7 @@ plt.show()`}
       <Substep
         substepDesc={
           <>
-            <ul>
+            <ul className="list">
               <li>
                 There is also a direct way to perform correlation analysis
                 between selected numerical features
@@ -506,7 +504,7 @@ print(correlation)`
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="text-sm w-full">
                 {Object.entries(correlationMatrix).map(([rowKey, row]) => (
                   <tr key={rowKey}>
                     <td style={{ border: "none" }}>
