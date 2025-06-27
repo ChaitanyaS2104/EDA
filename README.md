@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EDA Web App using NextJS
 
-## Getting Started
+## 📊 Project Overview
 
-First, run the development server:
+This project provides an interactive and user-friendly web interface for performing **Exploratory Data Analysis (EDA)** on CSV files.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- The **frontend** is developed using **Next.js**, which provides a responsive and modern UI.
+- The **backend** is built using **FastAPI** in Python and handles all the EDA logic (data cleaning, summarization, visualization).
+- The **Next.js frontend communicates with the FastAPI backend via HTTP API calls** to process and analyze the data.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 🔧 What It Does
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- Lets users upload a CSV file through the web interface
+- Sends the file to the FastAPI backend using an API call
+- Returns processed data summaries and visualizations to be displayed in the frontend
+- Also includes a sample dataset for instant demonstration
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔍 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Perform **automatic EDA** on a built-in sample dataset
+- Upload your own CSV file and generate:
+  - Summary statistics
+  - Missing value reports
+  - Data types and distributions
+  - Correlation matrix
+  - Visualizations using matplotlib/seaborn
+- Fast and lightweight backend using **FastAPI**
+- JSON and HTML support (depending on route design)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
+## 🔍 UI
 
-## Deploy on Vercel
+- The frontend is built using **Next.js** with a clean and responsive design.
+- Works seamlessly across all screen sizes — from mobile phones to desktops.
+- Mobile
+- <img width="360" alt="image" src="https://github.com/user-attachments/assets/8ba8ecf5-aa62-4097-8355-f4bc91c6b9c3" />
+  <img width="360" alt="image" src="https://github.com/user-attachments/assets/c0d1c51b-99d3-4112-8086-e74f48679e3a" />
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Desktop
+- <img width="1440" alt="image" src="https://github.com/user-attachments/assets/4e07db38-a015-4580-8a87-1af3f58cf529" />
+  <img width="1439" alt="image" src="https://github.com/user-attachments/assets/7484ca90-fed5-49fa-a81f-a867252a4063" />
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🧪 Tech Stack
+
+- **Frontend**: Next.js (React Framework)
+- **Backend API**: FastAPI
+- **Data Processing**: Pandas, NumPy
+- **Visualization**: Matplotlib, Seaborn
+- **Deployment**:
+  - **Backend**: FastAPI deployed on [Render](https://render.com)
+  - **Frontend**: Next.js (can be hosted on Vercel, Netlify, or locally)
+
+---
